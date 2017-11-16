@@ -23,12 +23,10 @@ public class MainActivity
     RecyclerView recyclerView;
     NewsListAdapter newsListAdapter;
     private final static int LOADER_ID = 0;
-    private final static int NO_DATA_ID = 1;
     private final static int NO_NETWORK_ID = 2;
     private final static int GOOD_ID = 3;
     private final static int LOADING_ID = 4;
 
-    private View empty;
     private View disconnected;
     private View loading;
 
