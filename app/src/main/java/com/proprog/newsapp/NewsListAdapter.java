@@ -39,7 +39,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ItemVi
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(final ItemViewHolder holder, int position) {
         News news = newses.get(position);
         String title = news.getWebTitle();
         String section = news.getSectionName();
@@ -55,6 +55,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ItemVi
                 Log.d("News",url);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
