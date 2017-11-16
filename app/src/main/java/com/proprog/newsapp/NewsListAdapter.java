@@ -39,7 +39,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ItemVi
     }
 
     @Override
-    public void onBindViewHolder(final ItemViewHolder holder, int position) {
+    public void onBindViewHolder(ItemViewHolder holder, int position) {
         News news = newses.get(position);
         String title = news.getWebTitle();
         String section = news.getSectionName();
