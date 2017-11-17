@@ -30,7 +30,7 @@ public class MainActivity
     private View disconnected;
     private View loading;
 
-    private String fullUrl = "http://content.guardianapis.com/search?q=debates&api-key=test";
+    private String fullUrl = "http://content.guardianapis.com/search?q=debates&api-key=test&show-tags=contributor";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

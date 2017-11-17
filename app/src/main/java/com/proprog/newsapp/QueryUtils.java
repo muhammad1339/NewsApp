@@ -28,13 +28,12 @@ public class QueryUtils {
     }
 
 
-
     public ArrayList<News> fetchBookData(String queryUrl) {
         //prepare url
         URL url = createURL(queryUrl);
         //fetch json data from url
         String jsonResponse = makeHttpRequest(url);
-        ArrayList<News> newses ;
+        ArrayList<News> newses;
         newses = extractBookFeature(jsonResponse);
         return newses;
     }
@@ -50,12 +49,21 @@ public class QueryUtils {
             if (results != null) {
                 Log.d(LOG_MSG_CLASS, "extractBookFeature : " + String.valueOf(results.length()));
                 for (int i = 0; i < results.length(); i++) {
+                    String authorName = "";
                     JSONObject result = results.optJSONObject(i);
+                    JSONArray tags = result.optJSONArray("tags");
                     String sectionName = result.optString("sectionName");
                     String webPublicationDate = result.optString("webPublicationDate");
                     String webTitle = result.optString("webTitle");
                     String webUrl = result.optString("webUrl");
-                    news = new News(sectionName, webPublicationDate, webTitle, webUrl);
+                    if (tags != null && tags.length() > 0) {
+                        for (int c = 0; c < tags.length(); c++) {
+                            String firstName = tags.optJSONObject(c).optString("firstName");
+                            String lastName = tags.optJSONObject(c).optString("lastName");
+                            authorName = firstName + " " + lastName;
+                        }
+                    }
+                    news = new News(sectionName, webPublicationDate, webTitle, webUrl, authorName);
                     newses.add(news);
                 }
             } else {
@@ -67,7 +75,6 @@ public class QueryUtils {
             Log.d(LOG_MSG_CLASS, "JSON Exception" + e.getMessage());
             IS_URL_GOOD = false;
         }
-
 
         return newses;
     }

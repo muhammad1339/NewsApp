@@ -2,8 +2,10 @@ package com.proprog.newsapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,15 +45,23 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ItemVi
         String title = news.getWebTitle();
         String section = news.getSectionName();
         String date = news.getWebPublicationDate();
+        String author = news.getAuthorName();
         final String url = news.getWebUrl();
 
         holder.newsTitleTV.setText(title);
         holder.newsSectionTV.setText(section);
         holder.newsDateTV.setText(date);
+        if (TextUtils.isEmpty(author)) {
+            holder.newsAuthorTV.setVisibility(View.GONE);
+        } else {
+            holder.newsAuthorTV.setTypeface(Typeface.createFromAsset(context.getApplicationContext().getAssets(),"fonts/dancing_script_regular.ttf"));
+            holder.newsAuthorTV.setVisibility(View.VISIBLE);
+        }
+        holder.newsAuthorTV.setText(author);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("News",url);
+                Log.d("News", url);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -72,8 +82,10 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ItemVi
         TextView newsSectionTV;
         @BindView(R.id.news_date_tv)
         TextView newsDateTV;
-
+        @BindView(R.id.news_author_tv)
+        TextView newsAuthorTV;
         private View view;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
